@@ -53,7 +53,7 @@ function start() {
   });
 
   //Connecting search event with a search input
-  HTML.searchinput.addEventListener("keyup", searching);
+  HTML.searchinput.addEventListener("keyup", searchItOut);
   bloodStatus();
 }
 
@@ -212,27 +212,31 @@ function prepareObject(jsonObject) {
   //Rendering a complete student object.//
   return student;
 }
-//SEARCH BY FIRST AND LAST NAMES
-function searching(event) {
-  console.log("search names");
-  //Value from the search bar
-  let keywords = event.target.value;
-  const searchFirstname = event.target.dataset.firstname;
-  const searchLastname = event.target.dataset.lastname;
-  const searchHouse = event.target.dataset.house;
 
-  if (searchFirstname === "firstname") {
+
+//The Searching Input//
+//Working on function allowing to search using the first and last names.
+function searchItOut(event) {
+  let keywords = event.target.value;
+  //Accessing the received values from the search bar.//
+  const firstNameSearched = event.target.dataset.firstname;
+  //Targetting the first name.//
+  const lastNameSearched = event.target.dataset.lastname;
+  //Targetting the last name.//
+  const houseSearching = event.target.dataset.house;
+
+  if (firstNameSearched === "firstname") {
     keywords = "firstname";
-  } else if (searchLastname === "lastname") {
+  } else if (lastNameSearched === "lastname") {
     keywords = "lastname";
-  } else if (searchHouse === "house") {
+  } else if (houseSearching === "house") {
     keywords = "house";
   }
-  displayList(searchForStudents(keywords));
+  //Affecting what's being displayed on the student list (by the search value).//
+  displayList(theStudentsSearching(keywords));
 }
 
-function searchForStudents(keywords) {
-  console.log("searchForStudents");
+function theStudentsSearching(keywords) {
   const searchresult = students.filter(searchFunction);
   keywords = keywords.toLowerCase();
 
