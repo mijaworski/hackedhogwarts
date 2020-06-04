@@ -29,7 +29,7 @@
 
       <div id="settings">
 
-        <div id="filterandsort">
+        <div id="filtering">
           <label for="filter">Filter by the name of House: </label>
           <select name="housefilter" id="housefilter">
             <option value="*" class="filter" data-action="filter" data-filter="*">select the House</option>
@@ -61,7 +61,7 @@
     <!-- List of the information being displayed in the list-->
     <template id="studentTemplate">
       <div class="singleTemplate">
-        <img class="studentAvatar" src="" alt="">
+        <img class="studentAvatar" src="" alt="The Avatar of the Student">
         <h2 data-field="firstname"></h2>
         <h2 data-field="lastname"></h2>
         <p data-theme="" data-field="house"></p>
@@ -69,11 +69,10 @@
     </template>
 
     <!-- Defining a modal structure, deciding information of each student -->
-    <div class="popup">
-      <button class="close">✕ close x</button>
+    <div class="modalito">
 
-      <section id="onestudent">
-        <div class="rowtop">
+      <section id="displayOneStudent">
+        <div class="topOfModal">
           <h2>That card belongs to:</h2>
           <img src="" class="photo" data-field="photo" alt="">
           <div class="right">
@@ -83,15 +82,16 @@
             <h2 class="nickname" data-field="nickname"></h2>
           </div>
         </div>
-        <div class="rowbottom">
+        <div class="bottomOfModal">
           <p data-field="gender"></p>
           <p data-field="house"></p>
           <p data-field="bloodstatus"></p>
-          <button data-action="expell" class="expell">Expell this student</button>
+          <button data-action="expell" class="expell">EXPELL THAT STUDENT</button>
           <p data-field="expell"></p>
-          <div class="housecrest"></div>
         </div>
       </section>
+
+      <button class="close">-- CLOSE --</button>
 
     </div>
 

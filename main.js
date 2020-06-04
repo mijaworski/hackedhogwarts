@@ -42,8 +42,8 @@ function start() {
 
   HTML.theclone = document.querySelector("template");
 
-  HTML.popup = document.querySelector(".popup");
-  HTML.closepopup = document.querySelector(".close");
+  HTML.modalito = document.querySelector(".modalito");
+  HTML.closeModalito = document.querySelector(".close");
 
   //Click events for sorting and filtering
   HTML.filterhouse.addEventListener("change", filteringhouse);
@@ -174,6 +174,8 @@ function prepareObject(jsonObject) {
   student.blood = bloodStt();
 
   function bloodStt() {
+
+
     function checking(bloodarr) {
       return student.lastname == bloodarr;
     }
@@ -348,34 +350,30 @@ function displayStudent(student) {
 
   // click event for one student
   HTML.thelist.lastElementChild.addEventListener("click", () => {
-    popUpOne(student);
+    modalitoUno(student);
   });
 }
 
-function popUpOne(student) {
-  //Show popup box
-  HTML.popup.style.display = "block";
+//Display modal's area
+function modalitoUno(student) {
+  HTML.modalito.style.display = "block";
 
   //show the theme according (dataset has the same value as json object)
-  HTML.popup.dataset.theme = student.house;
-  HTML.closepopup.addEventListener("click", closePopUp);
+  HTML.modalito.dataset.theme = student.house;
+  HTML.closeModalito.addEventListener("click", closeModalito);
 
-  //remove all click events when closing popup
-  function closePopUp() {
-    HTML.popup.style.display = "none";
 
-    document
-      .querySelector("[data-action=expell]")
-      .removeEventListener("click", clickExpell);
-    document.querySelector("[data-field=expell]").textContent = "";
+  function closeModalito() {
+    //Getting rid of the click events
+    HTML.modalito.style.display = "none";
   }
 
-  //show detailed info on popup
-  document.querySelector("[data-field=firstname]").textContent =
+  //Detailed view of the modal's information
+  document.querySelector("#displayOneStudent > div.topOfModal > div > h2.firstname").textContent =
     student.firstname;
-  document.querySelector("[data-field=middlename]").textContent =
+  document.querySelector("#displayOneStudent > div.topOfModal > div > h2.middlename").textContent =
     student.middlename;
-  document.querySelector("[data-field=lastname]").textContent =
+  document.querySelector("#displayOneStudent > div.topOfModal > div > h2.lastname").textContent =
     student.lastname;
   document.querySelector("[data-field=photo]").src = "images/" + student.photo;
   document.querySelector("[data-field=gender]").textContent =
