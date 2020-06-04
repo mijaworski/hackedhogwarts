@@ -2,16 +2,87 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hacked Hogwarts</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Slabo+27px&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500&display=swap" rel="stylesheet">
+  <title>The Student List of Hogwarts '91</title>
 </head>
 
 <body>
+  <!-- how info of one student looks like on the list -->
+  <template id="studentbox">
+    <div class="container">
+      <img class="studentphoto" src="" alt="">
+      <h2 data-field="firstname"></h2>
+      <h2 data-field="lastname"></h2>
+      <p data-theme="" data-field="house"></p>
+      <div class="seestudent"></div>
+    </div>
+  </template>
 
+  <!--Pop-up window, showing detailed information of one painting-->
+  <div class="popup">
+    <button class="close">✕</button>
+    <section id="onestudent">
+      <div class="rowtop">
+        <h2>That card belongs to:</h2>
+        <img src="" class="photo" data-field="photo" alt="">
+        <div class="right">
+          <h2 class="firstname" data-field="firstname"></h2>
+          <h2 class="middlename" data-field="middlename"></h2>
+          <h2 class="lastname" data-field="lastname"></h2>
+          <h2 class="nickname" data-field="nickname"></h2>
+        </div>
+      </div>
+      <div class="rowbottom">
+        <p data-field="gender"></p>
+        <p data-field="house"></p>
+        <p data-field="bloodstatus"></p>
+        <button data-action="expell" class="expell">Expell this student</button>
+        <p data-field="expell"></p>
+        <div class="housecrest"></div>
+      </div>
+    </section>
+  </div>
 
-    <script src="main.js"></script>
+  <!-- Container for the student list -->
+  <article>
+    <h1 class="title">Year 1991 / Hogwarts School of Witchcraft and Wizardry</h1>
+    <section id="about">
+      <p class="gryffindor" data-filter="gryffindor"></p>
+      <p class="hufflepuff" data-filter="hufflepuff"></p>
+      <p class="ravenclaw" data-filter="ravenclaw"></p>
+      <p class="slytherin" data-filter="slytherin"></p>
+      <p class="totalstudents"></p>
+      <p class="expelledstudents">Expelled: <span class="number">0</span> students</p>
+    </section>
+    <div id="settings">
+      <div id="searchelms">
+        <div class="searchicon"></div>
+        <input type="search" name="searchbar" class="searchbar" placeholder="search">
+      </div>
+      <div id="filterandsort">
+        <label for="filter">Filter by house: </label>
+        <select name="housefilter" id="housefilter">
+          <option value="*" class="filter" data-action="filter" data-filter="*">Choose a house</option>
+          <option value="Slytherin" data-filter="slytherin">Slytherin</option>
+          <option value="Gryffindor" data-filter="gryffindor">Gryffindor</option>
+          <option value="Ravenclaw" data-filter="ravenclaw">Ravenclaw</option>
+          <option value="Hufflepuff" data-filter="hufflepuff">Hufflepuff</option>
+        </select>
+        <div id="sortbuttons"> <label for="sort">Sort by:</label>
+          <button data-action="sort" data-sort-direction="asc" data-sort="firstname">First
+            name</button>
+          <button data-action="sort" data-sort-direction="asc" data-sort="lastname">Last name</button>
+        </div>
+      </div>
+    </div>
+    <section id="contentlist"></section>
+  </article>
+  <script src="main.js"></script>
 </body>
 
 </html>
