@@ -45,6 +45,50 @@
     --house-crest: url(assets/slytherin.png);
 }
 
+.popup {
+    display: none;
+    position: fixed;
+    z-index: 1400;
+    top: 0vw;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+#onestudent {
+    width: 80vw;
+    min-height: 50vh;
+    padding: 5vw;
+    margin: 15vw auto;
+    background-color: var(--bg-popup-color);
+    border: var(--popup-border);
+    color: var(--text-color);
+    pointer-events: visible;
+}
+
+#onestudent .rowtop {
+    margin-top: 2vw;
+    display: flex;
+    flex-flow: row wrap;
+}
+
+#onestudent .right {
+    align-self: center;
+    margin-left: 1vw;
+}
+
+#onestudent .rowbottom {
+    margin-top: 6vw;
+    padding: 3vw;
+    display: flex;
+    flex-flow: column wrap;
+}
+
+.rowbottom p {
+    margin: 0;
+}
+
+
 main {
     display: flex;
     flex-direction: column;
@@ -91,9 +135,7 @@ main {
 .popup {
     display: none;
     position: fixed;
-    z-index: 1400;
-    top: 0vw;
-    width: 100vw;
+    width: 100vh;
     height: 100vh;
     background-color: rgba(0, 0, 0, 0.4);
 }
@@ -119,6 +161,10 @@ button {
     font-family: var(--font-text);
 }
 
+button:hover {
+    box-shadow: rgb(193, 214, 98) 0.5vw 0.2vw 2.8vw;
+}
+
 #searchBar>input {
     border: 1px solid grey;
     border-radius: 5px;
@@ -128,6 +174,10 @@ button {
     outline: 0;
     background-color: var(--bcg-modal);
     color: var(--text-color-h1);
+}
+
+#searchBar:hover {
+    box-shadow: rgb(193, 214, 98) 0.5vw 0.2vw 2.8vw;
 }
 
 
@@ -141,6 +191,10 @@ button {
     background-color: var(--bcg-color);
     width: 70%;
     box-shadow: rgb(24, 22, 32) 0.5vw 0.2vw 2.8vw;
+}
+
+.singleTemplate:hover {
+    box-shadow: rgb(193, 214, 98) 0.5vw 0.2vw 2.8vw;
 }
 
 .singleTemplate img {
