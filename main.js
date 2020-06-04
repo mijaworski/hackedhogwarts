@@ -27,19 +27,20 @@ const Student = {
 function start() {
   console.log("start");
   HTML.filterhouse = document.querySelector("select#housefilter");
+
   HTML.sortname = document.querySelectorAll("[data-action=sort]");
-  HTML.searchinput = document.querySelector("#searchelms > input");
+  HTML.searchinput = document.querySelector("#searchBar > input");
 
   HTML.displaystudents = document.querySelector(".totalstudents");
+
+  HTML.thelist = document.querySelector("section#contentlist");
+
   HTML.displaySlytherin = document.querySelector(".slytherin");
   HTML.displayHufflepuff = document.querySelector(".hufflepuff");
   HTML.displayRavenclaw = document.querySelector(".ravenclaw");
   HTML.displayGryffindor = document.querySelector(".gryffindor");
 
-  HTML.thelist = document.querySelector("section#contentlist");
-  HTML.blurbg = document.querySelector("article");
   HTML.theclone = document.querySelector("template");
-  HTML.clickOnestudent = document.querySelectorAll(".seestudent");
 
   HTML.popup = document.querySelector(".popup");
   HTML.closepopup = document.querySelector(".close");
@@ -336,10 +337,10 @@ function displayStudent(student) {
   const clone = HTML.theclone.content.cloneNode(true);
 
   // set clone data
-  clone.querySelector(".studentphoto").src = "images/" + student.photo;
+  clone.querySelector(".studentAvatar").src = "images/" + student.photo;
   clone.querySelector("[data-field=firstname]").textContent = student.firstname;
   clone.querySelector("[data-field=lastname]").textContent = student.lastname;
-  clone.querySelector("[data-field=house]").textContent = student.house;
+  clone.querySelector("[data-field=house]").textContent = "House of " + student.house;
 
   // append clone to list
   HTML.thelist.appendChild(clone);
@@ -352,9 +353,8 @@ function displayStudent(student) {
 }
 
 function popUpOne(student) {
-  //Show popup box & blur background
+  //Show popup box
   HTML.popup.style.display = "block";
-  HTML.blurbg.style.filter = "blur(3px)";
 
   //show the theme according (dataset has the same value as json object)
   HTML.popup.dataset.theme = student.house;
@@ -363,7 +363,6 @@ function popUpOne(student) {
   //remove all click events when closing popup
   function closePopUp() {
     HTML.popup.style.display = "none";
-    HTML.blurbg.style.filter = "none";
 
     document
       .querySelector("[data-action=expell]")

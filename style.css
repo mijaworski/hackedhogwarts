@@ -1,0 +1,184 @@
+* {
+    margin: 1% auto;
+    line-height: inherit;
+    box-sizing: border-box;
+}
+
+:root {
+    --font-h1-h2: 'Playfair Display', serif;
+    --font-text: 'Slabo 27px', serif;
+    --text-color: #4e67eb;
+    --text-color-h1: #201d89;
+    --bcg-color: #f0f4ff;
+    --bcg-modal: #ffffff;
+}
+
+/*------- HOUSE THEMES -------*/
+[data-theme="Gryffindor"] {
+    --popup-border: #f29829 solid 7px;
+    --bg-popup-color: #d0d3d9;
+    --text-color: #0d0d0d;
+    --crest-height: 13vw;
+    --house-crest: url(assets/gryffindor.png);
+}
+
+[data-theme="Hufflepuff"] {
+    --popup-border: #733e1f solid 7px;
+    --bg-popup-color: #f28729;
+    --text-color: #0d0d0d;
+    --crest-height: 12.4vw;
+    --house-crest: url(assets/hufflepuff.png);
+}
+
+[data-theme="Ravenclaw"] {
+    --popup-border: #0367a6 solid 7px;
+    --bg-popup-color: #aeb5bf;
+    --text-color: #0d0d0d;
+    --crest-height: 12.5vw;
+    --house-crest: url(assets/ravenclaw.png);
+}
+
+[data-theme="Slytherin"] {
+    --popup-border: #1a4032 solid 7px;
+    --bg-popup-color: #f2ab27;
+    --text-color: #0d0d0d;
+    --house-crest: url(assets/slytherin.png);
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+}
+
+#top {
+    background-color: var(--bcg-color);
+    border-width: 5%;
+    border-color: var(--text-color-h1);
+}
+
+#settings {
+    display: inline;
+}
+
+.crest {
+    width: 20%;
+    padding: 2%;
+}
+
+#contentlist {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    margin: 3vw;
+    padding: 3vw;
+}
+
+#about {
+    display: inline-block;
+    margin: 5%;
+}
+
+#housefilter {
+    font: var(--font-h1-h2);
+    color: var(--text-color-h1);
+}
+
+.title {
+    margin-left: 5%;
+    text-align: center;
+    font-size: 200%;
+}
+
+.popup {
+    display: none;
+    position: fixed;
+    z-index: 1400;
+    top: 0vw;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+h1,
+h2 {
+    font-family: var(--font-h1-h2);
+    color: var(--font-h1-h2);
+    /* padding: 1vw; */
+}
+
+p,
+label {
+    font-family: var(--font-text);
+    color: var(--font-text);
+    margin: 5%;
+}
+
+button {
+    border: none;
+    color: var(--text-color-h1);
+    background-color: transparent;
+    font-family: var(--font-text);
+}
+
+#searchBar>input {
+    border: 1px solid grey;
+    border-radius: 5px;
+    height: 20px;
+    width: 100%;
+    padding: 2px 23px 2px 30px;
+    outline: 0;
+    background-color: var(--bcg-modal);
+    color: var(--text-color-h1);
+}
+
+
+.singleTemplate {
+    display: flex;
+    flex-flow: column;
+    text-align: center;
+    margin: 1vw;
+    padding: 1vw;
+    cursor: pointer;
+    background-color: var(--bcg-color);
+    width: 70%;
+    box-shadow: rgb(24, 22, 32) 0.5vw 0.2vw 2.8vw;
+}
+
+.singleTemplate img {
+    /* margin: 3vw 0; */
+    margin-bottom: 2vw;
+}
+
+.singleTemplate h2 {
+    font-size: 2vw;
+    color: var(--text-color-h1);
+}
+
+.singleTemplate p {
+    font-size: 1vw;
+    color: var(--text-color);
+}
+
+
+@media screen and (max-width: 780px) {
+    main {
+        display: flex;
+        flex-direction: column;
+    }
+
+    #top {
+        text-align: justify;
+        margin: 5%;
+        padding: 5%;
+    }
+
+    #settings {
+        align-content: space-between;
+    }
+
+    #contentlist {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        margin: 5vw;
+        padding: 3vw;
+    }
+}
