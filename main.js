@@ -195,6 +195,7 @@ function prepareObject(jsonObject) {
     function runningThroughBlood(bloodarr) {
       return student.lastname == bloodarr;
     }
+    //Declaring the blood status.//
     const checkPure = pureBloodArray.some(runningThroughBlood);
     const checkHalf = halfBloodArray.some(runningThroughBlood);
     if (checkHalf === true && checkPure === true) {
@@ -208,6 +209,7 @@ function prepareObject(jsonObject) {
     }
   }
 
+  //Rendering a complete student object.//
   return student;
 }
 //SEARCH BY FIRST AND LAST NAMES
