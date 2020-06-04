@@ -47,9 +47,9 @@ function start() {
   HTML.closeModalito = document.querySelector(".close");
 
   //Click events for sorting and filtering
-  HTML.filterhouse.addEventListener("change", filteringhouse);
+  HTML.filterhouse.addEventListener("change", filterThoseHouses);
   HTML.sortname.forEach(button => {
-    button.addEventListener("click", sortingname);
+    button.addEventListener("click", sortThoseNames);
   });
 
   //Connecting search event with a search input
@@ -225,6 +225,7 @@ function searchItOut(event) {
   //Targetting the last name.//
   const houseSearching = event.target.dataset.house;
 
+  //Connecting what's beeing searched with the object parameteres.//
   if (firstNameSearched === "firstname") {
     keywords = "firstname";
   } else if (lastNameSearched === "lastname") {
@@ -236,6 +237,7 @@ function searchItOut(event) {
   displayList(theStudentsSearching(keywords));
 }
 
+//Student searching affected by used keywords.//
 function theStudentsSearching(keywords) {
   const searchresult = students.filter(searchFunction);
   keywords = keywords.toLowerCase();
@@ -255,91 +257,98 @@ function theStudentsSearching(keywords) {
       return false;
     }
   }
+
+  //Rendering the ready-to-be-seen search result.//
   return searchresult;
 }
-//FILTERING BY HOUSE
-function filteringhouse(event) {
-  //HUSK: atribute 'value' skal have den samme navn som info i listen
-  const selectedHouse = event.target.value;
-  //løsningen virkede ikke før fordi value = "slytherrin", men student.house = "Slytherin"
-  if (selectedHouse === "*") {
+//Setting up the filering based on the house value.//
+function filterThoseHouses(event) {
+  //Filtering based on the attribute name and the value coming from json.//
+  const chosenHouse = event.target.value;
+  if (chosenHouse === "*") {
+    //Option of displaying the list based on the students' names.//
     displayList(students);
   } else {
-    displayList(filterByHouse(selectedHouse));
+    //Option of displaying the list based on the houses' names.//
+    displayList(weFilterByHouse(chosenHouse));
   }
 }
 
-function filterByHouse(selectedHouse) {
+function weFilterByHouse(chosenHouse) {
   const result = students.filter(filterFunction);
 
   function filterFunction(student) {
-    if (student.house === selectedHouse) {
+    if (student.house === chosenHouse) {
       return true;
     } else {
       return false;
     }
   }
+  //Rendering the list based on the house value.//
   return result;
 }
 
-//SORTING BY NAME
-function sortingname(event) {
-  console.log("sorting name");
-  const sortDir = event.target.dataset.sortDirection;
-  const sortInfo = event.target.dataset.sort;
+//Setting up the sorting based on the name.//
+function sortThoseNames(event) {
+  const theDirectionOfSorting = event.target.dataset.sortDirection;
+  const sortingInformation = event.target.dataset.sort;
 
-  //The switch mellem ascending og descending
-  if (sortDir === "asc") {
+  //The option of switching between ascending and descending order.//
+  if (theDirectionOfSorting === "asc") {
     event.target.dataset.sortDirection = "dsc";
-  } else if (sortDir === "dsc") {
+  } else if (theDirectionOfSorting === "dsc") {
     event.target.dataset.sortDirection = "asc";
   }
 
-  displayList(sortByName(sortInfo, sortDir));
+  //Pushing the list order based on the sorting info and the chosen direction.//
+  displayList(sortByName(sortingInformation, theDirectionOfSorting));
 }
 
-function sortByName(sortInfo, sortDir) {
+function sortByName(sortingInformation, theDirectionOfSorting) {
   console.log("sortByName");
   let sortedlist;
 
-  if (sortDir === "asc") {
-    sortedlist = students.sort(compareAsc);
-    console.log("sortAsc");
-  } else if (sortDir === "dsc") {
-    sortedlist = students.sort(compareDsc);
-    console.log("sortDsc");
+
+  //Adjusting the direction of the sorting based on the chosen order.//
+  if (theDirectionOfSorting === "asc") {
+    sortedlist = students.sort(letsCompareWhatsAscending);
+  } else if (theDirectionOfSorting === "dsc") {
+    sortedlist = students.sort(letsCompareWhatsDescending);
   }
 
   //Declaring the ascending order of array
-  function compareAsc(a, b) {
-    console.log("compareAsc");
-    if (a[sortInfo] < b[sortInfo]) {
+  function letsCompareWhatsAscending(a, b) {
+    //Comparing values within the array in the ascending order.//
+    if (a[sortingInformation] < b[sortingInformation]) {
       return -1;
     } else {
       return 1;
     }
   }
   //Declaring the descending order of array
-  function compareDsc(a, b) {
-    console.log("compareDsc");
-    if (a[sortInfo] > b[sortInfo]) {
+  function letsCompareWhatsDescending(a, b) {
+    //Comparing values within the array in the descending order.//
+    if (a[sortingInformation] > b[sortingInformation]) {
       return -1;
     } else {
       return 1;
     }
   }
+
+  //Rendering the sorted list based on the chosen order of objects.//
   return sortedlist;
 }
 
+//Let's build that List.//
 function buildList() {
   const currentList = students;
   displayList(currentList);
 }
 
 function displayList(students) {
-  // clear the list
+  // First, we need to clear the list.//
   HTML.thelist.innerHTML = "";
-  // build a new list
+  // and build a new list.//
   students.forEach(displayStudent);
 }
 
@@ -355,7 +364,7 @@ function displayStudent(student) {
   HTML.displayRavenclaw.textContent = "Ravenclaw: " + displayRavenclaw.length + " students";
   HTML.displayGryffindor.textContent = "Gryffindor: " + displayGryffindor.length + " students";
 
-  HTML.displaystudents.textContent = "Current total: " + students.length + " students";
+  HTML.displaystudents.textContent = "In total: " + students.length + " students";
 
   // create clone
   const clone = HTML.theclone.content.cloneNode(true);
