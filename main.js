@@ -26,7 +26,6 @@ const Student = {
 
 //Selecting elements of DOM and defining a role of each of it
 function start() {
-  console.log("start");
   HTML.filterhouse = document.querySelector("select#housefilter");
 
   HTML.sortname = document.querySelectorAll("[data-action=sort]");
@@ -353,33 +352,36 @@ function displayList(students) {
 }
 
 function displayStudent(student) {
-  //Show the list's status
+  //Building the relation between the student house and student info.//
   const displaySlytherin = students.filter(student => student.house === "Slytherin");
-  const displayHufflepuff = students.filter(student => student.house === "Hufflepuff");
   const displayRavenclaw = students.filter(student => student.house === "Ravenclaw");
   const displayGryffindor = students.filter(student => student.house === "Gryffindor");
+  const displayHufflepuff = students.filter(student => student.house === "Hufflepuff");
 
+
+  //The numbers of house members.//
   HTML.displaySlytherin.textContent = "Slytherin: " + displaySlytherin.length + " students";
   HTML.displayHufflepuff.textContent = "Hufflepuff: " + displayHufflepuff.length + " students";
   HTML.displayRavenclaw.textContent = "Ravenclaw: " + displayRavenclaw.length + " students";
   HTML.displayGryffindor.textContent = "Gryffindor: " + displayGryffindor.length + " students";
 
+  //Calculating the total number of students.//
   HTML.displaystudents.textContent = "In total: " + students.length + " students";
 
-  // create clone
+  //Building a clone.//
   const clone = HTML.theclone.content.cloneNode(true);
 
-  // set clone data
+  //Cloning data.//
   clone.querySelector(".studentAvatar").src = "images/" + student.photo;
   clone.querySelector("[data-field=firstname]").textContent = student.firstname;
   clone.querySelector("[data-field=lastname]").textContent = student.lastname;
   clone.querySelector("[data-field=house]").textContent = "House of " + student.house;
 
-  // append clone to list
+  //Appending the clone to the list.//
   HTML.thelist.appendChild(clone);
 
 
-  // click event for one student
+  // The click event for one student, modal.//
   HTML.thelist.lastElementChild.addEventListener("click", () => {
     modalitoUno(student);
   });
@@ -389,7 +391,7 @@ function displayStudent(student) {
 function modalitoUno(student) {
   HTML.modalito.style.display = "block";
 
-  //show the theme according (dataset has the same value as json object)
+  //Show the theme according (dataset has the same value as json object)
   HTML.modalito.dataset.theme = student.house;
   HTML.closeModalito.addEventListener("click", closeModalito);
 

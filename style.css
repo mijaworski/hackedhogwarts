@@ -84,10 +84,11 @@ main {
     border-width: 2%;
     border-color: var(--text-color-h1);
     display: grid;
-    grid-template-columns: 1fr 5fr 1fr;
+    grid-template-columns: 1fr 5fr 3fr;
     grid-template-rows: 1fr 1fr;
     padding: 2.5%;
-    margin-top: 0;
+    margin: 5%;
+    margin-top: 0%;
     padding-top: 0;
 }
 
@@ -124,7 +125,7 @@ main {
 #contentlist {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    margin: 3vw;
+    margin: 4vw;
     padding: 3vw;
 }
 
