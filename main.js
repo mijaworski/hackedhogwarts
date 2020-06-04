@@ -1,9 +1,10 @@
 window.addEventListener("DOMContentLoaded", start);
 
+//Declaring arrays
 const HTML = {};
 let students = [];
-let arrHalf = [];
-let arrPure = [];
+let halfBloodArray = [];
+let pureBloodArray = [];
 
 
 //Defining an array of json files, one for the student list and one for the blood type
@@ -51,86 +52,96 @@ function start() {
     button.addEventListener("click", sortingname);
   });
 
-  //Search event for search
+  //Connecting search event with a search input
   HTML.searchinput.addEventListener("keyup", searching);
-  loadBlood();
+  bloodStatus();
 }
 
-async function loadBlood() {
-  console.log("loadBlood");
+//Fetching the blood info and preparing for the data clarification
+async function bloodStatus() {
   const response = await fetch(loadArray[1]);
   const jsonBlood = await response.json();
 
-  prepareBlood(jsonBlood);
-  loadStudents();
+  clearTheBlood(jsonBlood);
+  loadTheStudents();
 }
 
-function prepareBlood(jsonBlood) {
-  console.log("prepareBloodStatus");
-  arrHalf = jsonBlood.half;
-  arrPure = jsonBlood.pure;
+//Accessing the blood array
+function clearTheBlood(jsonBlood) {
+  halfBloodArray = jsonBlood.half;
+  pureBloodArray = jsonBlood.pure;
 }
 
-async function loadStudents() {
-  console.log("loadStudents");
+//Fetching the students array
+async function loadTheStudents() {
   const response = await fetch(loadArray[0]);
   const jsonData = await response.json();
 
-  // when loaded, prepare data objects
+  // As sooos as data get loaded, prepare data objects
   prepareObjects(jsonData);
 }
 
+//Mapping the object, making sure that it's ready for the list
 function prepareObjects(jsonData) {
-  console.log("prepareObjects");
   students = jsonData.map(prepareObject);
   displayList(students);
 }
 
+//The object preparation
 function prepareObject(jsonObject) {
-  console.log("prepare new objects");
   const student = Object.create(Student);
 
-  //Trim and splits names and houses into parts
+  //Trimming and spliting names + houses. Getting individual parts.
   const fulltexts = jsonObject.fullname.trim().toLowerCase();
   const house = jsonObject.house.trim().toLowerCase();
-  //const fulltexts = cleanup.replace(/"/g, "");
   const splitnames = fulltexts.split(" ");
 
-  //FIRST NAME
-  const first = splitnames[0];
-  const firstCap = first[0].toUpperCase();
-  const firstLower = first.slice(1).toLowerCase();
-  const firstName = firstCap + firstLower;
-  //Put values into new properties
+  //Working on the FIRST name.//
+
+  //Splitting the whole full name into smaller parts.
+  const firstLetter = splitnames[0];
+  //Making sure that the first letter of the name is written using capital letter.
+  const firstCapitalLetter = firstLetter[0].toUpperCase();
+  //Slicing
+  const firstLowerLetter = firstLetter.slice(1).toLowerCase();
+  const firstName = firstCapitalLetter + firstLowerLetter;
+  //Declaring properties for the received values.
   student.firstname = firstName;
 
-  //LAST NAME
+  //Working on the LAST name.//
+
+  //Defining where the last name is in the string.
   const theLastSpace = fulltexts.lastIndexOf(" ");
   const last = fulltexts.substring(theLastSpace + 1, fulltexts.length);
+  //Defining the placement of the lower and upper cases.
   const lastName = last[0].toUpperCase() + last.slice(1).toLowerCase();
-  let nameWithhyphen;
-  //Put values into new properties
+  let havingHyphen;
+  //Declaring properties for the received values.
+  //Defining the situation of the last names with the hyphens.
   if (lastName.includes("-") === true) {
-    nameWithhyphen =
+    havingHyphen =
       lastName[6].toUpperCase() + lastName.slice(7).toLowerCase();
-    student.lastname = lastName.substring(0, 6) + nameWithhyphen;
+    student.lastname = lastName.substring(0, 6) + havingHyphen;
   } else if (lastName === "Leanne") {
     student.lastname = "";
   } else {
     student.lastname = lastName;
   }
 
-  //MIDDLE NAME & NICK NAME (with quotes)
+  //Working on the MIDDLE and NICK name//
+  //Splitting the fullname from the array using the spaces, substringing and the indexOf.
   const theFirstSpace = fulltexts.indexOf(" ");
   const middleName = fulltexts.substring(theFirstSpace + 1, theLastSpace);
+  //Declaring the nick names.
   let ernie;
   let james;
   let lucius;
-  //Put values into new properties
+  //Placing the received values onto new properties.
   if (middleName.includes("er") === true) {
-    //keep quotes and capitalize first letter
+    //Leaving the quotes in the template.//
     ernie =
       middleName[0] +
+      //Capitalizing the first letter of the middle/nickname.//
       middleName[1].toUpperCase() +
       middleName.slice(2).toLowerCase();
     student.middlename = ernie;
@@ -144,24 +155,19 @@ function prepareObject(jsonObject) {
     student.middlename = middleName;
   }
 
-  //HOUSE
-  const capHouse = house[0].toUpperCase() + house.slice(1).toLowerCase();
-  //Put values into new properties
-  student.house = capHouse;
+  //Working on the house name.//
+  const houseName = house[0].toUpperCase() + house.slice(1).toLowerCase();
+  //Connecting the variable name with the json object name.
+  student.house = houseName;
 
-  //GENDER
-  const gender =
-    jsonObject.gender[0].toUpperCase() +
-    jsonObject.gender.slice(1).toLowerCase();
-  student.gender = gender;
 
-  //PHOTO
-  const photo =
-    lastName.toLowerCase() + "_" + firstName[0].toLowerCase() + ".png";
+  //Connecting the photos with the array.//
+  const photo = lastName.toLowerCase() + "_" + firstName[0].toLowerCase() + ".png";
+  //The Patils' case.//
   let patilsPhoto = lastName.toLowerCase() + "_" + firstName.toLowerCase() + ".png";
   let fletchleysPhoto =
     lastName.substring(6) + "_" + firstName[0].toLowerCase() + ".png";
-  //Put values into new properties
+  //Declaring the state of Patil and Fletchey's photos.//
   if (photo === "patil_p.png") {
     student.photo = patilsPhoto;
   } else if (photo === "finch-fletchley_j.png") {
@@ -170,23 +176,33 @@ function prepareObject(jsonObject) {
     student.photo = photo;
   }
 
-  //BLOODSTATUS
-  student.blood = bloodStt();
 
-  function bloodStt() {
+  //Working on the gender.
+  const gender =
+    //Making sure that the gender name is written with the first capital name.//
+    jsonObject.gender[0].toUpperCase() +
+    //And the rest of the letters are written using lower case.//
+    jsonObject.gender.slice(1).toLowerCase();
+  student.gender = gender;
 
 
-    function checking(bloodarr) {
+  //Let's define the blood status.//
+  student.blood = bloodType();
+  //Calling the blood function.//
+  function bloodType() {
+
+    //Running a function that checks the array of the blood types.//
+    function runningThroughBlood(bloodarr) {
       return student.lastname == bloodarr;
     }
-    const checkPure = arrPure.some(checking);
-    const checkHalf = arrHalf.some(checking);
+    const checkPure = pureBloodArray.some(runningThroughBlood);
+    const checkHalf = halfBloodArray.some(runningThroughBlood);
     if (checkHalf === true && checkPure === true) {
-      return "Halfblood";
+      return "Half-Blooded";
     } else if (checkHalf === true) {
-      return "Halfblood";
+      return "Half-Blooded";
     } else if (checkPure === true) {
-      return "Pureblood";
+      return "Pure-Blooded";
     } else {
       return "Muggle";
     }
@@ -288,7 +304,7 @@ function sortByName(sortInfo, sortDir) {
     console.log("sortDsc");
   }
 
-  //Ascending (stigende)
+  //Declaring the ascending order of array
   function compareAsc(a, b) {
     console.log("compareAsc");
     if (a[sortInfo] < b[sortInfo]) {
@@ -297,7 +313,7 @@ function sortByName(sortInfo, sortDir) {
       return 1;
     }
   }
-  //Descending (faldende)
+  //Declaring the descending order of array
   function compareDsc(a, b) {
     console.log("compareDsc");
     if (a[sortInfo] > b[sortInfo]) {
